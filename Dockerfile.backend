@@ -9,7 +9,7 @@ COPY backend/package*.json ./
 COPY backend/prisma ./prisma/
 
 # Install dependencies
-RUN npm ci
+RUN npm install
 
 # Copy backend source (excluding what's already copied)
 COPY backend/src ./src
@@ -35,7 +35,7 @@ COPY backend/package*.json ./
 COPY backend/prisma ./prisma/
 
 # Install production dependencies
-RUN npm ci --only=production && npx prisma generate
+RUN npm install --production && npx prisma generate
 
 # Copy built files
 COPY --from=builder /app/dist ./dist
