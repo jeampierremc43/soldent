@@ -20,42 +20,42 @@ export const USER_KEY = 'soldent_user'
 
 export const API_ENDPOINTS = {
   // Auth
-  LOGIN: '/api/auth/login',
-  REGISTER: '/api/auth/register',
-  LOGOUT: '/api/auth/logout',
-  REFRESH: '/api/auth/refresh',
-  ME: '/api/auth/me',
+  LOGIN: '/api/v1/auth/login',
+  REGISTER: '/api/v1/auth/register',
+  LOGOUT: '/api/v1/auth/logout',
+  REFRESH: '/api/v1/auth/refresh',
+  ME: '/api/v1/auth/me',
 
   // Users
-  USERS: '/api/users',
-  USER_BY_ID: (id: string) => `/api/users/${id}`,
+  USERS: '/api/v1/users',
+  USER_BY_ID: (id: string) => `/api/v1/users/${id}`,
 
   // Patients
-  PATIENTS: '/api/patients',
-  PATIENT_BY_ID: (id: string) => `/api/patients/${id}`,
+  PATIENTS: '/api/v1/patients',
+  PATIENT_BY_ID: (id: string) => `/api/v1/patients/${id}`,
 
   // Appointments
-  APPOINTMENTS: '/api/appointments',
-  APPOINTMENT_BY_ID: (id: string) => `/api/appointments/${id}`,
+  APPOINTMENTS: '/api/v1/appointments',
+  APPOINTMENT_BY_ID: (id: string) => `/api/v1/appointments/${id}`,
 
   // Medical Records
-  MEDICAL_RECORDS: '/api/medical-records',
-  MEDICAL_RECORD_BY_ID: (id: string) => `/api/medical-records/${id}`,
+  MEDICAL_RECORDS: '/api/v1/medical-records',
+  MEDICAL_RECORD_BY_ID: (id: string) => `/api/v1/medical-records/${id}`,
 
   // Invoices
-  INVOICES: '/api/invoices',
-  INVOICE_BY_ID: (id: string) => `/api/invoices/${id}`,
+  INVOICES: '/api/v1/invoices',
+  INVOICE_BY_ID: (id: string) => `/api/v1/invoices/${id}`,
 
   // Payments
-  PAYMENTS: '/api/payments',
-  PAYMENT_BY_ID: (id: string) => `/api/payments/${id}`,
+  PAYMENTS: '/api/v1/payments',
+  PAYMENT_BY_ID: (id: string) => `/api/v1/payments/${id}`,
 
   // Follow-ups
-  FOLLOWUPS: '/api/follow-ups',
-  FOLLOWUP_BY_ID: (id: string) => `/api/follow-ups/${id}`,
+  FOLLOWUPS: '/api/v1/follow-ups',
+  FOLLOWUP_BY_ID: (id: string) => `/api/v1/follow-ups/${id}`,
 
   // Dashboard
-  DASHBOARD_STATS: '/api/dashboard/stats',
+  DASHBOARD_STATS: '/api/v1/dashboard/stats',
 }
 
 // ============================================

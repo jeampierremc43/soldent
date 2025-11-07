@@ -235,10 +235,51 @@ export default function PatientsPage() {
       {/* Table */}
       <div className="bg-white rounded-lg shadow">
         {loading ? (
-          <div className="p-6 space-y-4">
-            {[...Array(5)].map((_, i) => (
-              <Skeleton key={i} className="h-16 w-full" />
-            ))}
+          <div>
+            {/* Table Header Skeleton */}
+            <div className="border-b">
+              <div className="grid grid-cols-8 gap-4 p-6">
+                <Skeleton className="h-4 w-full" />
+                <Skeleton className="h-4 w-full" />
+                <Skeleton className="h-4 w-full" />
+                <Skeleton className="h-4 w-full" />
+                <Skeleton className="h-4 w-full" />
+                <Skeleton className="h-4 w-full" />
+                <Skeleton className="h-4 w-full" />
+                <Skeleton className="h-4 w-full" />
+              </div>
+            </div>
+
+            {/* Table Rows Skeleton */}
+            <div className="space-y-0">
+              {[...Array(5)].map((_, i) => (
+                <div key={i} className="border-b last:border-b-0">
+                  <div className="grid grid-cols-8 gap-4 p-6 items-center">
+                    <div className="space-y-2">
+                      <Skeleton className="h-4 w-24" />
+                      <Skeleton className="h-3 w-20" />
+                    </div>
+                    <Skeleton className="h-4 w-full" />
+                    <Skeleton className="h-4 w-32" />
+                    <Skeleton className="h-4 w-24" />
+                    <Skeleton className="h-4 w-16" />
+                    <Skeleton className="h-6 w-12" />
+                    <Skeleton className="h-6 w-16" />
+                    <Skeleton className="h-8 w-20 justify-self-end" />
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            {/* Pagination Skeleton */}
+            <div className="flex items-center justify-between px-6 py-4 border-t">
+              <Skeleton className="h-4 w-64" />
+              <div className="flex items-center gap-2">
+                <Skeleton className="h-8 w-24" />
+                <Skeleton className="h-4 w-32" />
+                <Skeleton className="h-8 w-24" />
+              </div>
+            </div>
           </div>
         ) : patients.length === 0 ? (
           <div className="text-center py-16 px-6">

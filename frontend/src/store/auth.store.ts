@@ -2,6 +2,7 @@ import { create } from 'zustand'
 import { persist } from 'zustand/middleware'
 import type { User, AuthTokens } from '@/types'
 import { saveTokens, saveUser, clearAuth, getUser } from '@/lib/auth'
+import { AUTH_TOKEN_KEY, REFRESH_TOKEN_KEY } from '@/constants'
 
 /**
  * Authentication store using Zustand
@@ -19,6 +20,10 @@ interface AuthState {
   login: (user: User, tokens: AuthTokens) => void
   logout: () => void
   initialize: () => void
+
+  // Token getters
+  getAccessToken: () => string | null
+  getRefreshToken: () => string | null
 }
 
 export const useAuthStore = create<AuthState>()(
@@ -61,6 +66,18 @@ export const useAuthStore = create<AuthState>()(
           isAuthenticated: !!user,
           isLoading: false,
         })
+      },
+
+      // Get access token from localStorage
+      getAccessToken: () => {
+        if (typeof window === 'undefined') return null
+        return localStorage.getItem(AUTH_TOKEN_KEY)
+      },
+
+      // Get refresh token from localStorage
+      getRefreshToken: () => {
+        if (typeof window === 'undefined') return null
+        return localStorage.getItem(REFRESH_TOKEN_KEY)
       },
     }),
     {

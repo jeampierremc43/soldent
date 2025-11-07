@@ -87,40 +87,42 @@ class ApiClient {
    * GET request
    */
   async get<T = any>(url: string, config?: AxiosRequestConfig): Promise<T> {
-    const response: AxiosResponse<T> = await this.client.get(url, config)
-    return response.data
+    const response: AxiosResponse<any> = await this.client.get(url, config)
+    // Handle wrapped response from backend
+    return response.data.data !== undefined ? response.data.data : response.data
   }
 
   /**
    * POST request
    */
   async post<T = any>(url: string, data?: any, config?: AxiosRequestConfig): Promise<T> {
-    const response: AxiosResponse<T> = await this.client.post(url, data, config)
-    return response.data
+    const response: AxiosResponse<any> = await this.client.post(url, data, config)
+    // Handle wrapped response from backend
+    return response.data.data !== undefined ? response.data.data : response.data
   }
 
   /**
    * PUT request
    */
   async put<T = any>(url: string, data?: any, config?: AxiosRequestConfig): Promise<T> {
-    const response: AxiosResponse<T> = await this.client.put(url, data, config)
-    return response.data
+    const response: AxiosResponse<any> = await this.client.put(url, data, config)
+    return response.data.data !== undefined ? response.data.data : response.data
   }
 
   /**
    * PATCH request
    */
   async patch<T = any>(url: string, data?: any, config?: AxiosRequestConfig): Promise<T> {
-    const response: AxiosResponse<T> = await this.client.patch(url, data, config)
-    return response.data
+    const response: AxiosResponse<any> = await this.client.patch(url, data, config)
+    return response.data.data !== undefined ? response.data.data : response.data
   }
 
   /**
    * DELETE request
    */
   async delete<T = any>(url: string, config?: AxiosRequestConfig): Promise<T> {
-    const response: AxiosResponse<T> = await this.client.delete(url, config)
-    return response.data
+    const response: AxiosResponse<any> = await this.client.delete(url, config)
+    return response.data.data !== undefined ? response.data.data : response.data
   }
 
   /**
