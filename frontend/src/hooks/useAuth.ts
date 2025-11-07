@@ -32,7 +32,7 @@ export function useAuth() {
         toast.success('Inicio de sesión exitoso', {
           description: `Bienvenido, ${response.user.firstName}!`,
         })
-        router.push('/dashboard')
+        router.push('/home')
       }
     } catch (err: any) {
       const errorMessage = err?.response?.data?.message || 'Error al iniciar sesión'
@@ -61,7 +61,7 @@ export function useAuth() {
         toast.success('Registro exitoso', {
           description: 'Tu cuenta ha sido creada correctamente',
         })
-        router.push('/dashboard')
+        router.push('/home')
       }
     } catch (err: any) {
       const errorMessage = err?.response?.data?.message || 'Error al registrar usuario'

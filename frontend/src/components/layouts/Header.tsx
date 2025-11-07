@@ -43,7 +43,7 @@ export function Header({ className }: HeaderProps) {
     const segments = pathname.split('/').filter(Boolean)
 
     const breadcrumbs: BreadcrumbItem[] = [
-      { label: 'Dashboard', href: '/dashboard' }
+      { label: 'Dashboard', href: '/home' }
     ]
 
     if (segments.length > 1) {

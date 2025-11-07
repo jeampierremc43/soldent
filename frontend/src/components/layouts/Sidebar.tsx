@@ -29,32 +29,32 @@ interface NavItem {
 
 const navItems: NavItem[] = [
   {
-    href: '/dashboard',
+    href: '/home',
     label: 'Dashboard',
     icon: LayoutDashboard,
   },
   {
-    href: '/dashboard/patients',
+    href: '/patients',
     label: 'Pacientes',
     icon: Users,
   },
   {
-    href: '/dashboard/appointments',
+    href: '/appointments',
     label: 'Citas',
     icon: Calendar,
   },
   {
-    href: '/dashboard/medical',
+    href: '/medical',
     label: 'Historia Clínica',
     icon: FileText,
   },
   {
-    href: '/dashboard/accounting',
+    href: '/accounting',
     label: 'Contabilidad',
     icon: DollarSign,
   },
   {
-    href: '/dashboard/followups',
+    href: '/followups',
     label: 'Seguimiento',
     icon: CheckSquare,
   },
@@ -79,7 +79,7 @@ export function Sidebar({ className }: SidebarProps) {
       {/* Logo / Brand */}
       <div className="flex h-16 items-center justify-between border-b px-4">
         {!collapsed && (
-          <Link href="/dashboard" className="flex items-center space-x-2">
+          <Link href="/home" className="flex items-center space-x-2">
             <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-medical-blue-600 text-white font-bold">
               S
             </div>
