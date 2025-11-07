@@ -1,0 +1,16 @@
+# Environment variables
+.env
+
+# Backups
+backups/
+*.sql
+*.sql.gz
+
+# Logs
+logs/
+*.log
+
+# Temporary files
+tmp/
+temp/
+*.tmp

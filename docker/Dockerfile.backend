@@ -1,0 +1,97 @@
+# ===============================================
+# Multi-stage Dockerfile for Backend (Node.js 20 + TypeScript + Prisma)
+# ===============================================
+
+# -----------------------------------------------
+# Stage 1: Base
+# -----------------------------------------------
+FROM node:20-alpine AS base
+
+# Install security updates and required packages
+RUN apk update && apk upgrade && \
+    apk add --no-cache \
+    openssl \
+    dumb-init \
+    && rm -rf /var/cache/apk/*
+
+# Set working directory
+WORKDIR /app
+
+# Copy package files
+COPY backend/package*.json ./
+
+# -----------------------------------------------
+# Stage 2: Dependencies
+# -----------------------------------------------
+FROM base AS dependencies
+
+# Install all dependencies (including dev dependencies)
+RUN npm ci --include=dev
+
+# -----------------------------------------------
+# Stage 3: Build
+# -----------------------------------------------
+FROM dependencies AS build
+
+# Copy source code
+COPY backend/ ./
+
+# Generate Prisma Client
+RUN npx prisma generate
+
+# Build TypeScript application
+RUN npm run build
+
+# -----------------------------------------------
+# Stage 4: Production Dependencies
+# -----------------------------------------------
+FROM base AS prod-dependencies
+
+# Install only production dependencies
+RUN npm ci --omit=dev --ignore-scripts
+
+# -----------------------------------------------
+# Stage 5: Production
+# -----------------------------------------------
+FROM node:20-alpine AS production
+
+# Install security updates and runtime dependencies
+RUN apk update && apk upgrade && \
+    apk add --no-cache \
+    openssl \
+    dumb-init \
+    && rm -rf /var/cache/apk/*
+
+# Create non-root user
+RUN addgroup -g 1001 -S nodejs && \
+    adduser -S nodejs -u 1001
+
+# Set working directory
+WORKDIR /app
+
+# Copy production dependencies
+COPY --from=prod-dependencies --chown=nodejs:nodejs /app/node_modules ./node_modules
+
+# Copy built application
+COPY --from=build --chown=nodejs:nodejs /app/dist ./dist
+COPY --from=build --chown=nodejs:nodejs /app/prisma ./prisma
+COPY --from=build --chown=nodejs:nodejs /app/package*.json ./
+
+# Generate Prisma Client for production
+RUN npx prisma generate
+
+# Switch to non-root user
+USER nodejs
+
+# Expose application port
+EXPOSE 3001
+
+# Use dumb-init to handle signals properly
+ENTRYPOINT ["dumb-init", "--"]
+
+# Health check
+HEALTHCHECK --interval=30s --timeout=3s --start-period=40s --retries=3 \
+    CMD node -e "require('http').get('http://localhost:3001/health', (r) => {process.exit(r.statusCode === 200 ? 0 : 1)})"
+
+# Start application
+CMD ["node", "dist/index.js"]

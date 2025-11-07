@@ -1,0 +1,43 @@
+# ===============================================
+# Development Dockerfile for Backend
+# ===============================================
+# Features:
+# - Hot reload with nodemon
+# - TypeScript watch mode
+# - Debug port exposed
+# - Development dependencies included
+# ===============================================
+
+FROM node:20-alpine
+
+# Install security updates and development tools
+RUN apk update && apk upgrade && \
+    apk add --no-cache \
+    openssl \
+    dumb-init \
+    git \
+    && rm -rf /var/cache/apk/*
+
+# Set working directory
+WORKDIR /app
+
+# Copy package files
+COPY backend/package*.json ./
+
+# Install all dependencies (including dev)
+RUN npm ci --include=dev
+
+# Copy source code
+COPY backend/ ./
+
+# Generate Prisma Client
+RUN npx prisma generate
+
+# Expose application and debug ports
+EXPOSE 3001 9229
+
+# Use dumb-init to handle signals properly
+ENTRYPOINT ["dumb-init", "--"]
+
+# Start with nodemon for hot reload
+CMD ["npm", "run", "dev"]
