@@ -11,8 +11,10 @@ COPY backend/prisma ./prisma/
 # Install dependencies
 RUN npm ci
 
-# Copy backend source
-COPY backend ./
+# Copy backend source (excluding what's already copied)
+COPY backend/src ./src
+COPY backend/tsconfig.json ./tsconfig.json
+COPY backend/nodemon.json ./nodemon.json 2>/dev/null || true
 
 # Generate Prisma Client
 RUN npx prisma generate
